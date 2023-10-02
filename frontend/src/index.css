@@ -14,3 +14,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+li a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+li.active a {
+  color: white !important;
+}

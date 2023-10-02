@@ -4,14 +4,16 @@ import './Colors.scss';
 
 import React, { useEffect, useState } from 'react';
 import Card from './components/Card/Card';
+import Pagination from './components/Pagination/Pagination';
 
+const ITEMS_PER_PAGE = 20; // Nombre d'éléments par page
 
 function App() {
-  let [perPage, updatePerPage] = useState(20);
-  let [offset, updateOffset] = useState(0);
+  let [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE);
+  let [currentPage, setCurrentPage] = useState(0);
   let [fetchedData, updateFetchedData] = useState([]);
-  let { results } = fetchedData;
-  let API = `https://pokeapi.co/api/v2/pokemon/?limit=${perPage}&offset=${offset}`;
+  let { count, results } = fetchedData;
+  let API = `https://pokeapi.co/api/v2/pokemon/?limit=${itemsPerPage}&offset=${currentPage * itemsPerPage}`;
 
   useEffect(() => {
     (async function () {
@@ -19,6 +21,10 @@ function App() {
       updateFetchedData(data);
     })();
   }, [API]);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   return (
     <div className="App">
@@ -33,6 +39,11 @@ function App() {
           </div>
         </div>
       </div>
+      <Pagination
+        count={count}
+        handlePageClick={handlePageClick}
+        ITEMS_PER_PAGE={ITEMS_PER_PAGE}
+      />
     </div>
   );
 }
