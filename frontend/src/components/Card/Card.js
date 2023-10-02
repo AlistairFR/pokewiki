@@ -1,36 +1,52 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 
+import '../../Colors.scss';
 import './Card.module.scss'
 
-function Card({results}) {
-    let display;
+function Card({ results }) {
+  const [cardsData, setCardsData] = useState([]);
 
-    if (results) {
-        display = results.map((x) => {
-            let { name, url } = x;
+  useEffect(() => {
+    if (results && results.length > 0) {
+      async function fetchData() {
+        const cards = await Promise.all(
+          results.map(async (x) => {
+            const response = await fetch(x.url);
+            const data = await response.json();
+            return {
+              name: x.name,
+              url: x.url,
+              spriteUrl: data.sprites.front_default,
+            };
+          })
+        );
+        setCardsData(cards);
+      }
 
-            return (
-                <div
-                key={name}
-                className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 position-relative text-dark"
-                >
-                    <div className="card">
-                        <div className="card-body">
-                        <h5 className="card-title">{name}</h5>
-                        <p className="card-text">
-                            <a href={url}>View more</a>
-                        </p>
-                        </div>
-                    </div>
+      fetchData();
+    }
+  }, [results]);
+
+  return (
+    <div className="row">
+      {cardsData.map((card) => (
+        <div
+          key={card.name}
+          className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 position-relative text-dark"
+        >
+          <div className="card">
+            <a className="text-decoration-none text-black" href={card.url}>
+                <div className="card-body">
+                <img className="card-img-top" src={card.spriteUrl} alt={`Sprite for ${card.name}`} />
+                <h4 className="text-capitalize text-center">{card.name}</h4>
                 </div>
-            );
-        });
-    }
-    else{
-        display = "No Characters Found :/";
-    }
-
-    return <>{display}</>;
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
-export default Card
+export default Card;
+
