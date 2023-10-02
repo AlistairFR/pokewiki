@@ -7,9 +7,11 @@ import Card from './components/Card/Card';
 
 
 function App() {
-  let API = 'https://pokeapi.co/api/v2/pokemon/';
+  let [perPage, updatePerPage] = useState(20);
+  let [offset, updateOffset] = useState(0);
   let [fetchedData, updateFetchedData] = useState([]);
-  let { count, next, previous, results } = fetchedData;
+  let { results } = fetchedData;
+  let API = `https://pokeapi.co/api/v2/pokemon/?limit=${perPage}&offset=${offset}`;
 
   useEffect(() => {
     (async function () {
