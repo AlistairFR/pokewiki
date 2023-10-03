@@ -16,7 +16,7 @@ function Card({ results }) {
             return {
               name: x.name,
               url: x.url,
-              spriteUrl: data.sprites.front_default,
+              spriteUrl: data.sprites.front_default
             };
           })
         );
@@ -31,14 +31,14 @@ function Card({ results }) {
     <div className="row">
       {cardsData.map((card) => (
         <div
-          key={card.name}
+          key={card.id}
           className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 position-relative text-dark"
         >
           <div className="card">
             <a className="text-decoration-none text-black" href={card.url}>
                 <div className="card-body">
-                <img className="card-img-top" src={card.spriteUrl} alt={`Sprite for ${card.name}`} />
-                <h4 className="text-capitalize text-center">{card.name}</h4>
+                    <img className="card-img-top" src={card.spriteUrl} alt={`Sprite for ${card.name}`} />
+                    <h4 className="text-capitalize text-center">{card.name}</h4>
                 </div>
             </a>
           </div>
