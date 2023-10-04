@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import '../../Colors.scss';
 import './Card.module.scss'
@@ -16,7 +17,8 @@ function Card({ results }) {
             return {
               name: x.name,
               url: x.url,
-              spriteUrl: data.sprites.front_default
+              spriteUrl: data.sprites.front_default,
+              id: data.id
             };
           })
         );
@@ -35,12 +37,12 @@ function Card({ results }) {
           className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 position-relative text-dark"
         >
           <div className="card">
-            <a className="text-decoration-none text-black" href={card.url}>
+            <Link className="text-decoration-none text-black" to={`/pokemon/${card.id}`}>
                 <div className="card-body">
                     <img className="card-img-top" src={card.spriteUrl} alt={`Sprite for ${card.name}`} />
                     <h4 className="text-capitalize text-center">{card.name}</h4>
                 </div>
-            </a>
+            </Link>
           </div>
         </div>
       ))}
