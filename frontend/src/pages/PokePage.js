@@ -16,10 +16,11 @@ function PokePage() {
   }, [id]);
 
   return (
-    <div>
-        <h1 className='text-capitalize'>{pokemonData ? pokemonData.name : 'Chargement...'}</h1>
+    <div className='bg-deepred vh-100 vw-100'>
+        <h1 className='text-capitalize bg-white'>{pokemonData ? pokemonData.name : 'Chargement...'}</h1>
         {pokemonData && (
             <img
+                className='bg-white'
                 src={pokemonData.sprites.front_default}
                 alt={`Sprite de ${pokemonData.name}`}
             />
